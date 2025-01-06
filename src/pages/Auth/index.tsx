@@ -3,7 +3,8 @@ import user from '/src/assets/user.svg';
 import show from '/src/assets/show.svg';
 import hideIcon from '/src/assets/hideIcon.svg';
 import { postRequest } from '../../api';
-import useNotifications from '../../components/notification';
+
+import { useNotifications } from '../../components/notification/NotificationProvider';
 const Login: Component = () => {
 	const [isPasswordVisible, setPasswordVisible] = createSignal(false);
 	const [loading, setLoading] = createSignal(false);

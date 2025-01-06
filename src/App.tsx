@@ -4,6 +4,7 @@ import { Router, Route } from '@solidjs/router';
 import Login from './pages/Auth';
 // Import your Home and NotFound components when they are created.
 
+
 const App: Component = () => {
 	return (
 		<Router>
