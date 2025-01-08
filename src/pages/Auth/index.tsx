@@ -3,14 +3,17 @@ import user from '/src/assets/user.svg';
 import show from '/src/assets/show.svg';
 import hideIcon from '/src/assets/hideIcon.svg';
 import { postRequest } from '../../api';
+import { useNavigate } from '@solidjs/router';
 
 import { useNotifications } from '../../components/notification/NotificationProvider';
 const Login: Component = () => {
+	const navigate = useNavigate();
 	const [isPasswordVisible, setPasswordVisible] = createSignal(false);
 	const [loading, setLoading] = createSignal(false);
 	const [error, setError] = createSignal<string | null>(null);
 	const [username, setUsername] = createSignal('');
 	const [password, setPassword] = createSignal('');
+	const [isAuthenticated, setIsAuthenticated] = createSignal(false);
 
 	const { addNotification } = useNotifications();
 
@@ -23,32 +26,30 @@ const Login: Component = () => {
 		e.preventDefault();
 		setLoading(true);
 		setError(null);
-
 		try {
-			// Sending a POST request to the login API
 			const response = await postRequest('http://localhost:8081/api/login', {
 				name: username(),
 				password: password(),
 			});
+			console.log(response.access_token, 'Login response');
 
-			// Log successful response for debugging
-			console.log(response, 'Login response');
-
-			// Add success notification
+			if (response.acccess_token) {
+				setIsAuthenticated(true);
+				localStorage.setItem('access_token', response.acccess_token);
+				navigate('/');
+			}
 			addNotification('Successfully logged in!', 'success');
 		} catch (err) {
-			// Log error to see the structure
 			console.log(err, 'Error during login');
-
-			// Add error notification
 			addNotification('Something went wrong!', 'error');
-
-			// Set the error state
-			// setError(err instanceof Error ? err.message : 'An unknown error occurred');
 		} finally {
 			setLoading(false);
 		}
 	};
+	function checkAuth() {
+		const token = localStorage.getItem('acccess_token');
+		setIsAuthenticated(!!token);
+	}
 
 	return (
 		<div class='bg-gray-50 font-[sans-serif]'>
@@ -114,5 +115,4 @@ const Login: Component = () => {
 		</div>
 	);
 };
-
 export default Login;

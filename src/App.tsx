@@ -1,21 +1,18 @@
-import type { Component } from 'solid-js';
-import { render } from 'solid-js/web';
+// src/App.tsx
+import { Component } from 'solid-js';
 import { Router, Route } from '@solidjs/router';
 import Login from './pages/Auth';
-// Import your Home and NotFound components when they are created.
-
+import Home from './pages/Home';
+import MainLayout from './pages/Layout/MainLayout';
 
 const App: Component = () => {
 	return (
-		<Router>
-			{/* Define your routes here */}
-			{/* Uncomment the Home route when Home component is ready */}
-			{/* <Route path="/" component={Home} /> */}
-			<Route path='/login' component={Login} />
-			{/* Catch-all route for 404 handling */}
-			{/* Uncomment when NotFound component is ready */}
-			{/* <Route path="*" component={NotFound} /> */}
-		</Router>
+		<>
+			<Router root={MainLayout}>
+				<Route path='/login' component={Login} />
+				<Route component={Home} />
+			</Router>
+		</>
 	);
 };
 
