@@ -2,10 +2,12 @@ import { createSignal, type Component } from 'solid-js';
 import user from '/src/assets/user.svg';
 import show from '/src/assets/show.svg';
 import hideIcon from '/src/assets/hideIcon.svg';
-import { postRequest } from '../../api';
+import { postRequest } from '../../utils/api';
 import { useNavigate } from '@solidjs/router';
+import { useAuth } from './AuthContext';
 
 import { useNotifications } from '../../components/notification/NotificationProvider';
+
 const Login: Component = () => {
 	const navigate = useNavigate();
 	const [isPasswordVisible, setPasswordVisible] = createSignal(false);
@@ -14,7 +16,10 @@ const Login: Component = () => {
 	const [username, setUsername] = createSignal('');
 	const [password, setPassword] = createSignal('');
 	const [isAuthenticated, setIsAuthenticated] = createSignal(false);
+	const { login } = useAuth();
+	const url = import.meta.env.VITE_API_URL;
 
+	console.log(url, 'urrl');
 	const { addNotification } = useNotifications();
 
 	// Function to toggle password visibility
@@ -27,29 +32,22 @@ const Login: Component = () => {
 		setLoading(true);
 		setError(null);
 		try {
-			const response = await postRequest('http://localhost:8081/api/login', {
+			const response = await postRequest(`${url}/login`, {
 				name: username(),
 				password: password(),
 			});
-			console.log(response.access_token, 'Login response');
-
-			if (response.acccess_token) {
-				setIsAuthenticated(true);
-				localStorage.setItem('access_token', response.acccess_token);
-				navigate('/');
+			if (response && response.access_token) {
+				login(response.access_token); // Use login method
+				navigate('/cashes', { replace: true });
+				addNotification('Successfully logged in!', 'success');
 			}
-			addNotification('Successfully logged in!', 'success');
 		} catch (err) {
-			console.log(err, 'Error during login');
+			console.error(err);
 			addNotification('Something went wrong!', 'error');
 		} finally {
 			setLoading(false);
 		}
 	};
-	function checkAuth() {
-		const token = localStorage.getItem('acccess_token');
-		setIsAuthenticated(!!token);
-	}
 
 	return (
 		<div class='bg-gray-50 font-[sans-serif]'>
