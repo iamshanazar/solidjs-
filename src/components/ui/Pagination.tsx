@@ -35,7 +35,7 @@ export const Pagination: Component<PaginationProps> = props => {
 				{/* Previous Button */}
 				<li>
 					<button
-						class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50'
+						class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700  disabled:opacity-50'
 						disabled={isFirstPage()}
 						onClick={() => handlePageChange(props.currentPage - 1)}
 					>
@@ -50,8 +50,8 @@ export const Pagination: Component<PaginationProps> = props => {
 							<button
 								class={`flex items-center justify-center px-3 h-8 leading-tight ${
 									page === props.currentPage
-										? 'text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'
-										: 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+										? 'text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 '
+										: 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700'
 								}`}
 								onClick={() => handlePageChange(page)}
 							>
@@ -68,7 +68,7 @@ export const Pagination: Component<PaginationProps> = props => {
 					</li>
 					<li>
 						<button
-							class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+							class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 '
 							onClick={() => handlePageChange(props.pages)}
 						>
 							{props.pages}
@@ -79,7 +79,7 @@ export const Pagination: Component<PaginationProps> = props => {
 				{/* Next Button */}
 				<li>
 					<button
-						class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-50'
+						class='flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700   dark:hover:text-white disabled:opacity-50'
 						disabled={isLastPage()}
 						onClick={() => handlePageChange(props.currentPage + 1)}
 					>

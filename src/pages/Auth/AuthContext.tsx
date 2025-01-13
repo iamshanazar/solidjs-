@@ -7,7 +7,7 @@ type AuthContextType = {
 	logout: () => void;
 };
 
-const AuthContext = createContext<AuthContextType>();
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider(props: ParentProps) {
 	const [isAuthenticated, setIsAuthenticated] = createSignal(

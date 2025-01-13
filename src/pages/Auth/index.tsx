@@ -15,11 +15,10 @@ const Login: Component = () => {
 	const [error, setError] = createSignal<string | null>(null);
 	const [username, setUsername] = createSignal('');
 	const [password, setPassword] = createSignal('');
-	const [isAuthenticated, setIsAuthenticated] = createSignal(false);
+
 	const { login } = useAuth();
 	const url = import.meta.env.VITE_API_URL;
 
-	console.log(url, 'urrl');
 	const { addNotification } = useNotifications();
 
 	// Function to toggle password visibility
@@ -33,11 +32,12 @@ const Login: Component = () => {
 		setError(null);
 		try {
 			const response = await postRequest(`${url}/login`, {
-				name: username(),
+				username: username(),
 				password: password(),
 			});
 			if (response && response.access_token) {
 				login(response.access_token); // Use login method
+				localStorage.setItem('refresh_token', response.refresh_token);
 				navigate('/cashes', { replace: true });
 				addNotification('Successfully logged in!', 'success');
 			}
